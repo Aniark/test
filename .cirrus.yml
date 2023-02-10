@@ -10,3 +10,9 @@ compute_engine_instance:
 env:
   GITHUB_TOKEN: ENCRYPTED[!34f230443710315e76a14b50330a58b7367fad944be1c1d3e6ac8e0bc4c5266fcd04d3254757de8a10eef6739e0a1fe4!]
 
+task:
+
+  
+  setup_script: |
+    gg
+    
