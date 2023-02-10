@@ -1,9 +1,8 @@
-gce_instance:
+compute_engine_instance:
   # Image list available via
   # gcloud compute images list --project freebsd-org-cloud-dev --no-standard-images
   image_project: ubuntu-os-cloud
   image_name: ubuntu-2204-jammy-arm64-v20220712a
-  zone: us-central1-a
   cpu: 8
   memory: 32G
   disk: 256
