@@ -1,0 +1,43 @@
+name: test
+
+on:
+#  repository_dispatch:
+  workflow_dispatch:
+#  push:
+#  release:
+#    types: [released, edited]
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.TK }}
+      TZ: Asia/Shanghai
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          prerelease: true
+          draft: false
+          title: test
+          automatic_release_tag: test
+          repo_token: "${{ secrets.TK }}"
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+         retain_days: 1
+         keep_minimum_runs: 3
+             
+      - name: Commit
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git checkout --orphan new_branch
+          git add -A
+          git commit -am "update new file"
+          git branch -D main
+          git branch -m main
+          git push origin main --force
