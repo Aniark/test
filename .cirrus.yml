@@ -21,6 +21,7 @@ task:
     echo "ccache -M 50G" >> ~/.bashrc
     curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
     chmod a+x ~/bin/repo
+    echo "# set PATH so it includes user's private bin if it exists
     if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"
     fi" >> ~/.profile
