@@ -9,19 +9,29 @@ compute_engine_instance:
   nested_virtualization: true
 env:
   GITHUB_TOKEN: ENCRYPTED[!34f230443710315e76a14b50330a58b7367fad944be1c1d3e6ac8e0bc4c5266fcd04d3254757de8a10eef6739e0a1fe4!]
-  
+
 task:
   setup_script: |
-    apt update && apt install --no-install-recommends -qy bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev openjdk-11-jdk repo brotli
+    su
+    apt update && apt install --no-install-recommends -qy bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev openjdk-11-jdk repo brotli unzip
     mkdir -p ~/bin
     mkdir -p ~/android/lineage
     export USE_CCACHE=1
     export CCACHE_EXEC=/usr/bin/ccache
     echo "ccache -M 50G" >> ~/.bashrc
+    curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+    chmod a+x ~/bin/repo
+    echo "# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi" >> ~/.profile
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+    source ~/.profile
     cd ~/android/lineage
-    repo init -u https://github.com/LineageOS/android.git -b lineage-17.1 < /dev/null
-    repo sync -c -j 8
     ln -s /usr/bin/python3 /usr/bin/python
+    repo init -u https://github.com/LineageOS/android.git -b lineage-17.1
+    repo sync -c -j`nproc`
     source build/envsetup.sh
     breakfast onclite
     mkdir ~/android/system_dump/
@@ -36,10 +46,10 @@ task:
     mkdir system/
     mount system.img system/
     python3 sdat2img/sdat2img.py vendor.transfer.list vendor.new.dat vendor.img
-    rm system/vendor
+    rm -rf system/vendor
     mkdir system/vendor
     mount vendor.img system/vendor/
-    cd ~/android/lineage
+    cd ~/android/lineage/device/xiaomi/onclite
     ./extract-files.sh ~/android/system_dump/
     croot
     brunch onclite
