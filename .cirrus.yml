@@ -33,7 +33,7 @@ task:
     repo init -u https://github.com/LineageOS/android.git -b lineage-17.1
     repo sync -c -j`nproc`
     source build/envsetup.sh
-     breakfast onclite
+    breakfast onclite
     mkdir ~/android/system_dump/
     cd ~/android/system_dump/
     wget https://b2.timschumi.net/file/lineage-archive/lineage-17.1-20210214-nightly-onclite-signed.zip
