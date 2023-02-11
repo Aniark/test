@@ -3,7 +3,7 @@ compute_engine_instance:
   image: family/docker-kvm # family or a full image name.
   platform: linux
   architecture: amd64 # optional. By default, amd64 is assumed.
-  cpu: 24 # optional. Defaults to 2 CPUs.
+  cpu: 16 # optional. Defaults to 2 CPUs.
   memory: 32G # optional. Defaults to 4G.
   disk: 256 # optional. By default, uses the smallest disk size required by the image.
   nested_virtualization: true
