@@ -19,7 +19,7 @@ task:
     export CCACHE_EXEC=/usr/bin/ccache
     echo "ccache -M 50G" >> ~/.bashrc
     cd ~/android/lineage
-    git init -u https://github.com/LineageOS/android.git -b lineage-17.1 < /dev/null
+    repo init -u https://github.com/LineageOS/android.git -b lineage-17.1 < /dev/null
     repo sync -c -j 8
     source build/envsetup.sh
     breakfast onclite
